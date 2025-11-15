@@ -60,13 +60,13 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <script>
-    const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSM13BIgGLWazo9tNI6m_RhGWjUQ0vl0hWlqN9xkIslh6foRV3vj7OZNV73Zl9DrJo_QjEW7YbjR-9m/pub?output=csv';
+    const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRQ2-xSpLogG3gKdzJrmTmAwRLf4zaz1zqkfC9IM2_iIG9zKVhH2jpVgWakisPQefn5VWHZC8OyUjX7/pub?gid=728198380&single=true&output=csv';
 
     function groupByCategory(data) {
       return data.reduce((acc, row) => {
         const category = row['Category'];
         if (!acc[category]) acc[category] = [];
-        acc[category].push({ name: row['Item'], price: row['Price'] });
+        acc[category].push({ name: row['Item'], price: row['Price'], description: row['Description'] });
         return acc;
       }, {});
     }
@@ -100,6 +100,15 @@
 
             itemDiv.appendChild(nameSpan);
             itemDiv.appendChild(priceSpan);
+
+            if(item.description) {
+              const descDiv = document.createElement('div');
+              descDiv.style.fontSize = '0.9rem';
+              descDiv.style.color = '#555';
+              descDiv.textContent = item.description;
+              itemDiv.appendChild(descDiv);
+            }
+
             categoryDiv.appendChild(itemDiv);
           });
 
